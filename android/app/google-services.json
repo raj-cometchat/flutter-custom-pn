@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "182368211645",
+    "project_id": "flutter-custom-pn",
+    "storage_bucket": "flutter-custom-pn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182368211645:android:b432654aada3bc3f149dd4",
+        "android_client_info": {
+          "package_name": "com.example.flutter_custom_pn"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoEZjNDxXYH5HJdk2150-SakFINlxp4Ac"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
