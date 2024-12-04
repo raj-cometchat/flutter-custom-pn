@@ -163,7 +163,7 @@ class FirebaseService with WidgetsBindingObserver, CallListener {
       if (context.mounted) await initListeners(context);
 
       // 6. Fetch and register FCM token
-      String? token = await _firebaseMessaging.getToken();
+      String? token = await _firebaseMessaging.getAPNSToken();
 
       if (token != null) {
         CometChatNotifications.registerPushToken(

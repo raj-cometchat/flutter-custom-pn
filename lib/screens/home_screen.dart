@@ -7,7 +7,7 @@ import '../apns_service.dart';
 import '../firebase_service.dart';
 
 class HomeScreen extends StatefulWidget {
-  final FirebaseService notificationService = FirebaseService();
+  //final FirebaseService notificationService = FirebaseService();
   final APNSService apnsServices = APNSService();
 
   HomeScreen({
@@ -24,21 +24,21 @@ class _HomeScreenState extends State<HomeScreen>
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     super.initState();
-    if (Platform.isAndroid) {
-    widget.notificationService.init(context);
-    } else {
+    // if (Platform.isAndroid) {
+    // widget.notificationService.init(context);
+    // } else {
       widget.apnsServices.init(context);
-    }
+    // }
   }
 
-  @override
-  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-    if (state == AppLifecycleState.resumed) {
-      if (Platform.isAndroid) {
-      widget.notificationService.resumeCallListeners(context);
-      }
-    }
-  }
+  // @override
+  // Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+  //   if (state == AppLifecycleState.resumed) {
+  //     if (Platform.isAndroid) {
+  //     widget.notificationService.resumeCallListeners(context);
+  //     }
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -51,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen>
     return Scaffold(
         body: CometChatConversationsWithMessages(
       conversationsConfiguration: ConversationsConfiguration(
+        showBackButton: false,
         appBarOptions: [
           InkWell(
             child: const Icon(Icons.logout, color: Color(0xFF6851D6)),

@@ -65,7 +65,6 @@ class APNSService with CometChatCallsEventsListener {
 
   init(BuildContext context) {
     final _connector = ApnsPushConnector();
-
     _connector.shouldPresent = (x) => Future.value(false);
 
     _connector.configure(

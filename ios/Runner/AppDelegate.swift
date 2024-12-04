@@ -29,7 +29,7 @@ func convertDictionaryToJsonString(dictionary: [String: Any]) -> String? {
     return nil
 }
 
-@UIApplicationMain
+@main
 @objc class AppDelegate: FlutterAppDelegate, PKPushRegistryDelegate {
     
     var pushRegistry: PKPushRegistry!
