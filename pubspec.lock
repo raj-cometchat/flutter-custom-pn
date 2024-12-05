@@ -194,7 +194,7 @@ packages:
     source: hosted
     version: "0.9.3+3"
   firebase_core:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: firebase_core
       sha256: "2438a75ad803e818ad3bd5df49137ee619c46b6fc7101f4dbc23da07305ce553"
@@ -218,7 +218,7 @@ packages:
     source: hosted
     version: "2.18.1"
   firebase_messaging:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: firebase_messaging
       sha256: "4d0968ecb860d7baa15a6e2af3469ec5b0d959e51c59ce84a52b0f7632a4aa5a"
@@ -257,10 +257,9 @@ packages:
   flutter_apns_x:
     dependency: "direct main"
     description:
-      name: flutter_apns_x
-      sha256: abc6a8cccd24d106c4cfb6f0d58304217a10e3ba51594bca54beee74ae9c8bb0
-      url: "https://pub.dev"
-    source: hosted
+      path: flutter_apns_x
+      relative: true
+    source: path
     version: "0.0.1"
   flutter_callkit_incoming:
     dependency: "direct main"
@@ -287,7 +286,7 @@ packages:
     source: hosted
     version: "4.0.0"
   flutter_local_notifications:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       name: flutter_local_notifications
       sha256: ef41ae901e7529e52934feba19ed82827b11baa67336829564aeab3129460610
