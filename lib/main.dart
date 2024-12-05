@@ -14,19 +14,6 @@ class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const Text('Flutter Demo Home Page'),
-    );
-  }
-
-  @override
   State<StatefulWidget> createState() => _MyAppState();
 }
 
@@ -43,7 +30,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Push Notifications Sample App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(),

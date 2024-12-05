@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:cometchat_chat_uikit/cometchat_chat_uikit.dart';
 import 'package:flutter/material.dart';
 
 import '../apns_service.dart';
-import '../firebase_service.dart';
 
 class HomeScreen extends StatefulWidget {
   //final FirebaseService notificationService = FirebaseService();
