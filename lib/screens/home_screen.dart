@@ -1,12 +1,13 @@
+import 'dart:io';
 import 'package:cometchat_chat_uikit/cometchat_chat_uikit.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_custom_pn/shared_perferences.dart';
 import '../apns_service.dart';
+import '../firebase_service.dart';
 
 class HomeScreen extends StatefulWidget {
-  //final FirebaseService notificationService = FirebaseService();
+  final FirebaseService notificationService = FirebaseService();
   final APNSService apnsServices = APNSService();
-
   HomeScreen({
     super.key,
   });
@@ -21,21 +22,21 @@ class _HomeScreenState extends State<HomeScreen>
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     super.initState();
-    // if (Platform.isAndroid) {
-    // widget.notificationService.init(context);
-    // } else {
+    if (Platform.isAndroid) {
+    widget.notificationService.init(context);
+    } else {
       widget.apnsServices.init(context);
-    // }
+    }
   }
 
-  // @override
-  // Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-  //   if (state == AppLifecycleState.resumed) {
-  //     if (Platform.isAndroid) {
-  //     widget.notificationService.resumeCallListeners(context);
-  //     }
-  //   }
-  // }
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.resumed) {
+      if (Platform.isAndroid) {
+      widget.notificationService.resumeCallListeners(context);
+      }
+    }
+  }
 
   @override
   void dispose() {
@@ -55,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen>
             onTap: () async {
               debugPrint("Logout Successful");
               CometChatNotifications.unregisterPushToken(onSuccess: (response) {
+                SharedPreferencesClass.clear();
                 debugPrint(
                     "unregisterPushToken:success ${response.toString()}");
               }, onError: (e) {

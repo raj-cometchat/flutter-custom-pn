@@ -34,7 +34,6 @@ func convertDictionaryToJsonString(dictionary: [String: Any]) -> String? {
     
     var pushRegistry: PKPushRegistry!
     var callController: CXCallController?
-    
     override func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
@@ -76,7 +75,7 @@ func convertDictionaryToJsonString(dictionary: [String: Any]) -> String? {
         
         let callKitProvider = CXProvider(configuration: providerConfiguration)
                 callController = CXCallController()
-        if #available(iOS 10.0, *) {
+        if #available(iOS 18.0, *) {
             UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
         }
         

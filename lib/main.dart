@@ -2,7 +2,6 @@ import 'package:cometchat_calls_uikit/cometchat_calls_uikit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_pn/screens/login_screen.dart';
 import 'package:get/get.dart';
-
 import 'shared_perferences.dart';
 
 Future<void> main() async {
@@ -18,6 +17,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
   @override
   void initState() {
     initServices();
@@ -40,4 +40,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-

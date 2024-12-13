@@ -1,18 +1,17 @@
 import 'dart:convert';
-
 import 'package:cometchat_calls_uikit/cometchat_calls_uikit.dart';
 import 'package:cometchat_chat_uikit/cometchat_chat_uikit.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_apns_x/flutter_apns/src/apns_connector.dart';
 import 'package:flutter_callkit_incoming/entities/entities.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:flutter_custom_pn/const.dart';
-
 import 'models/call_action.dart';
 import 'models/call_type.dart';
 import 'models/payload_data.dart';
+import 'screens/webview_screen.dart';
+import 'shared_perferences.dart';
 
 class APNSService with CometChatCallsEventsListener {
   String? id;
@@ -136,16 +135,23 @@ class APNSService with CometChatCallsEventsListener {
               PayloadData.fromJson(jsonDecode(body['extra']['message']));
         }
         String sessionId = payloadData.sessionId ?? '';
+        String guid = payloadData.receiver ?? "";
         id = sessionId;
 
         switch (callEvent?.event) {
           case Event.actionCallIncoming:
+ 
+            SharedPreferencesClass.init();
             break;
           case Event.actionCallAccept:
-            UIKitSettings uiKitSettings = (UIKitSettingsBuilder()
+            SharedPreferencesClass.setString("SessionId", sessionId);
+            SharedPreferencesClass.setString("Guid", guid);
+            SharedPreferencesClass.setString("callType", callEvent?.body["type"] == 0 ? "audio" : "video");
+            OpenWebView(context,guid,sessionId);
+            /*UIKitSettings uiKitSettings = (UIKitSettingsBuilder()
                   ..subscriptionType = CometChatSubscriptionType.allUsers
                   ..region = AppConstants.region
-                  ..autoEstablishSocketConnection = true
+                  ..autoEstablishSocketConnection = false
                   ..appId = AppConstants.appId
                   ..authKey = AppConstants.authKey
                   ..extensions =
@@ -193,7 +199,7 @@ class APNSService with CometChatCallsEventsListener {
                 onError: (CometChatException e) {
                   debugPrint(
                       "Initialization failed with exception: ${e.message}");
-                });
+                });*/
             break;
 
           case Event.actionCallDecline:
@@ -229,17 +235,17 @@ class APNSService with CometChatCallsEventsListener {
                 debugPrint("$excep");
               },
             );
+            /*CometChatUIKitCalls.endSession(
+              onSuccess: (message) {
+                CometChat.clearActiveCall();
+                //Navigator.pop(context);
+              },
+              onError: (error) {
+                  debugPrint(
+                      'caught in endSession call could not be ended: ${error.message}');
+              },
+            );*/
 
-            // CometChatUIKitCalls.endSession(
-            //   onSuccess: (message) {
-            //     CometChat.clearActiveCall();
-            //     //Navigator.pop(context);
-            //   },
-            //   onError: (error) {
-            //       debugPrint(
-            //           'caught in endSession call could not be ended: ${error.message}');
-            //   },
-            // );
             break;
           default:
             break;
@@ -315,4 +321,17 @@ class APNSService with CometChatCallsEventsListener {
       }
     }
   }
+}
+
+void OpenWebView(BuildContext context, String guid, sessionID) {
+  // String authToken = CometChat.getUserAuthToken().toString();
+  print("PROCESS 2 ------------------------------> 410");
+  String authToken = "superhero4_173340169895f3eafd536ca6da3864fbd9f26ef2";
+  print("AUTH TOKEN - $authToken");
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => WebViewPage(authToken, guid, sessionID),
+    ),
+  );
 }

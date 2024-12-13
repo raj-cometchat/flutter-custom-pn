@@ -26,4 +26,11 @@ class SharedPreferencesClass {
     }
     return preferences?.getString(key) ?? "";
   }
+
+  static void clear() async {
+    await preferences?.clear();
+    if (kDebugMode) {
+      debugPrint("All shared preferences data cleared");
+    }
+  }
 }
