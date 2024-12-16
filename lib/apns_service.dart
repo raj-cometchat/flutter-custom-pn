@@ -331,7 +331,7 @@ void OpenWebView(BuildContext context, String guid, sessionID) {
   Navigator.push(
     context,
     MaterialPageRoute(
-      builder: (context) => WebViewPage(authToken, guid, sessionID),
+      builder: (context) => WebViewPage(guid, sessionID),
     ),
   );
 }

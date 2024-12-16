@@ -237,8 +237,7 @@ class FirebaseService {
         }
 
         // For handling notification when the app is in the background
-        FirebaseMessaging.onBackgroundMessage(
-            firebaseMessagingBackgroundHandler);
+        FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
         // refresh token listener
         _firebaseMessaging.onTokenRefresh.listen((String token) async {
@@ -262,8 +261,7 @@ class FirebaseService {
         // This line sets up a listener that triggers the 'openNotification' method when a user taps on a notification and the app opens.
 
         // Handling a notification click event when the app is in the background
-        FirebaseMessaging.onMessageOpenedApp
-            .listen((RemoteMessage message) async {
+        FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
           openNotification(context, message);
         });
 
@@ -408,13 +406,13 @@ class FirebaseService {
 
   OpenWebView(BuildContext context, String guid, String sessionId) {
     // String authToken = CometChat.getUserAuthToken().toString();
-    print("PROCESS 2 ------------------------------> 410");
-    String authToken = "superhero4_173340169895f3eafd536ca6da3864fbd9f26ef2";
-    print("AUTH TOKEN - $authToken");
+    // print("PROCESS 2 ------------------------------> 410");
+    // String authToken = "superhero4_173340169895f3eafd536ca6da3864fbd9f26ef2";
+    // print("AUTH TOKEN - $authToken");
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => WebViewPage(authToken, guid, sessionId),
+        builder: (context) => WebViewPage(guid, sessionId),
       ),
     );
   }
