@@ -31,9 +31,11 @@ dependencies:
   flutter_callkit_incoming: ^2.0.4+2
   cometchat_chat_uikit: ^4.5.10
   cometchat_calls_uikit: ^4.3.4
+  cometchat_calls_sdk: ^4.0.10
   cometchat_sdk: ^4.0.18
 #  flutter_apns_x: ^0.0.1
   flutter_apns_only: any
+  file_picker: ^5.0.0
   shared_preferences: ^2.2.1
   permission_handler: ^10.0.0
   flutter:
@@ -46,7 +48,8 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
-  flutter_inappwebview: ^6.1.5
+  flutter_inappwebview: ^6.2.0-beta.2
+#  flutter_inappwebview: ^6.1.5
 
   get: any
 dependency_overrides:

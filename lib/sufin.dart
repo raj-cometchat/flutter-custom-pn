@@ -1,10 +1,21 @@
 import 'package:cometchat_calls_uikit/cometchat_calls_uikit.dart';
 import 'package:cometchat_chat_uikit/cometchat_chat_uikit.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_callkit_incoming/entities/entities.dart';
+import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:flutter_custom_pn/firebase_service.dart';
+import 'package:flutter_custom_pn/shared_perferences.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'const.dart';
+import 'firebase_options.dart';
+import 'models/call_action.dart';
+import 'models/call_type.dart';
+import 'models/payload_data.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -16,7 +27,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   InAppWebViewController? webViewController;
 
-  /*@pragma('vm:entry-point')
+  @pragma('vm:entry-point')
   Future<void> firebaseMessagingBackgroundHandler(
       RemoteMessage rMessage) async {
     await displayIncomingCall(rMessage);
@@ -102,7 +113,8 @@ class _MainScreenState extends State<MainScreen> {
                 debugPrint(
                     "CallingExtension enable with context called in login");
                 // CometChat.addCallListener("CometChatService_CallListener", this);
-                CometChatUIKitCalls.rejectCall(callEvent?.body["id"], CallStatusConstants.rejected,
+                CometChatUIKitCalls.rejectCall(
+                    callEvent?.body["id"], CallStatusConstants.rejected,
                     onSuccess: (Call call) async {
                   call.category = MessageCategoryConstants.call;
                   CometChatCallEvents.ccCallRejected(call);
@@ -205,6 +217,12 @@ class _MainScreenState extends State<MainScreen> {
       _settings = settings;
       await Permission.camera.request();
       await Permission.microphone.request();
+      await Permission.storage.request();
+      await Permission.manageExternalStorage.request();
+      await Permission.mediaLibrary.request();
+      await Permission.photos.request();
+      await Permission.accessMediaLocation.request();
+
     } catch (e) {
       if (kDebugMode) {
         debugPrint('Error requesting permissions: $e');
@@ -247,7 +265,8 @@ class _MainScreenState extends State<MainScreen> {
         // This line sets up a listener that triggers the 'openNotification' method when a user taps on a notification and the app opens.
 
         // Handling a notification click event when the app is in the background
-        FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+        FirebaseMessaging.onMessageOpenedApp
+            .listen((RemoteMessage message) async {
           openNotification(context, message);
         });
 
@@ -413,7 +432,7 @@ class _MainScreenState extends State<MainScreen> {
     final guid = SharedPreferencesClass.getString("Guid");
 
     if (sessionID.isNotEmpty) {
-      */ /*CallSettingsBuilder callSettingsBuilder = (CallSettingsBuilder()
+      CallSettingsBuilder callSettingsBuilder = (CallSettingsBuilder()
         ..enableDefaultLayout = true
         ..setAudioOnlyCall = (callType == CallType.audio.value));
       CometChatUIKitCalls.acceptCall(sessionID, onSuccess: (Call call) {
@@ -432,7 +451,7 @@ class _MainScreenState extends State<MainScreen> {
       }, onError: (e) {
         debugPrint(
             "Unable to accept call from incoming call screen ${e.details}");
-      });*/ /*
+      });
       print("PROCESS 1 ------------------------------> 453");
       openWebView(guid, sessionID);
     }
@@ -444,19 +463,19 @@ class _MainScreenState extends State<MainScreen> {
       (CallEvent? callEvent) async {
         switch (callEvent?.event) {
           case Event.actionCallIncoming:
-            */ /*CometChatUIKitCalls.init(AppConstants.appId, AppConstants.region,
+            CometChatUIKitCalls.init(AppConstants.appId, AppConstants.region,
                 onSuccess: (p0) {
               debugPrint("CometChatUIKitCalls initialized successfully");
             }, onError: (e) {
               debugPrint("CometChatUIKitCalls failed ${e.message}");
-            });*/ /*
+            });
             activeCallSession = callEvent?.body["id"];
             break;
           case Event.actionCallAccept:
-            //final callType = callEvent?.body["type"];
+            final callType = callEvent?.body["type"];
             final guid = SharedPreferencesClass.getString("Guid");
             final sessionID = SharedPreferencesClass.getString("SessionId");
-            */ /*CallSettingsBuilder callSettingsBuilder = (CallSettingsBuilder()
+            CallSettingsBuilder callSettingsBuilder = (CallSettingsBuilder()
               ..enableDefaultLayout = true
               ..setAudioOnlyCall = (callType == CallType.audio.value));
 
@@ -476,7 +495,7 @@ class _MainScreenState extends State<MainScreen> {
             }, onError: (e) {
               debugPrint(
                   "Unable to accept call from incoming call screen ${e.message}");
-            });*/ /*
+            });
             print("PROCESS 1 ------------------------------> 492");
             openWebView(guid, sessionID);
             break;
@@ -509,13 +528,41 @@ class _MainScreenState extends State<MainScreen> {
       },
     );
   }
-*/
+
   @override
   Widget build(BuildContext context) {
     cometinit();
     return Scaffold(
       appBar: AppBar(
         title: Text("InApp WebView"),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: InAppWebView(
+              initialUrlRequest:
+                  URLRequest(
+          //url: WebUri("https://cometchat.com")),
+               url: WebUri("https://webview-sufin-test.netlify.app/?guid=&sessionId=&authToken=superhero4_173340169895f3eafd536ca6da3864fbd9f26ef2")),
+               //url: WebUri("https://webview-sufin-test.netlify.app/?guid=${widget.guid}&sessionId=${widget.sessionId}&authToken=superhero4_173340169895f3eafd536ca6da3864fbd9f26ef2")),
+              // url: WebUri("https://sufin-notification-test-calling.netlify.app/")),
+              //url: WebUri("https://sufin-notification-test-calling.netlify.app/?guid=${widget.guid}&sessionId=${widget.sessionId}&authToken=${widget.authToken}")),
+              //url: WebUri("https://angular-v15-v4.netlify.app/")),
+              initialSettings: InAppWebViewSettings(
+                javaScriptEnabled: true, // Enable JavaScript
+              ),
+              onWebViewCreated: (InAppWebViewController controller) {
+                // Initialize the webViewController when the WebView is created
+                webViewController = controller;
+              },
+              onPermissionRequest: (controller, request) async {
+                return PermissionResponse(
+                    resources: request.resources,
+                    action: PermissionResponseAction.GRANT);
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -540,7 +587,7 @@ class _MainScreenState extends State<MainScreen> {
         });
       }
       FirebaseService().init(context);
-        }, onError: (CometChatException excep) {
+    }, onError: (CometChatException excep) {
       debugPrint("Initialization failed with exception: ${excep.message}");
     });
   }

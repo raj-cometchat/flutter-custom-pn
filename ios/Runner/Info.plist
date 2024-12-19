@@ -64,5 +64,9 @@
 	</array>
 	<key>NSUserNotificationsUsageDescription</key>
 	<string>Gaurav Singh</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>Document permission</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Photo Permission</string>
 </dict>
 </plist>

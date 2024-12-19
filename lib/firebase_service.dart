@@ -58,20 +58,6 @@ Future<void> displayIncomingCall(RemoteMessage rMessage) async {
             incomingCallNotificationChannelName: "Incoming Call",
             isShowFullLockedScreen: false)
         ,
-        ios: const IOSParams(
-          handleType: 'generic',
-          supportsVideo: true,
-          maximumCallGroups: 2,
-          maximumCallsPerCallGroup: 1,
-          audioSessionMode: 'default',
-          audioSessionActive: true,
-          audioSessionPreferredSampleRate: 44100.0,
-          audioSessionPreferredIOBufferDuration: 0.005,
-          supportsDTMF: true,
-          supportsHolding: true,
-          supportsGrouping: false,
-          supportsUngrouping: false,
-        ),
       );
       await FlutterCallkitIncoming.showCallkitIncoming(callKitParams);
 
