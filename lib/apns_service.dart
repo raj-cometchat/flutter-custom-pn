@@ -7,6 +7,7 @@ import 'package:flutter_apns_x/flutter_apns/src/apns_connector.dart';
 import 'package:flutter_callkit_incoming/entities/entities.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:flutter_custom_pn/const.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'models/call_action.dart';
 import 'models/call_type.dart';
 import 'models/payload_data.dart';
@@ -62,7 +63,7 @@ class APNSService with CometChatCallsEventsListener {
     }
   }
 
-  init(BuildContext context) {
+  init(BuildContext context) async {
     final _connector = ApnsPushConnector();
     _connector.shouldPresent = (x) => Future.value(false);
 
@@ -81,6 +82,8 @@ class APNSService with CometChatCallsEventsListener {
 
     //Requesting user permissions
     _connector.requestNotificationPermissions();
+    await Permission.camera.request();
+    await Permission.microphone.request();
 
     //token value get//
     _connector.token.addListener(() {

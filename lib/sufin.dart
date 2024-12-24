@@ -545,7 +545,7 @@ class _MainScreenState extends State<MainScreen> {
         title: Text("InApp WebView"),
       ),
       body: InAppWebView(
-        initialUrlRequest: URLRequest(url: WebUri("https://chatgpt.com/")),
+        initialUrlRequest: URLRequest(url: WebUri("https://webview-sufin-test.netlify.app/?guid=&sessionId=&authToken=")),
         onWebViewCreated: (InAppWebViewController controller) {
           print("CONTROLLER SET HO GAYA - $controller");
           webViewController = controller;

@@ -64,5 +64,13 @@
 	</array>
 	<key>NSUserNotificationsUsageDescription</key>
 	<string>Gaurav Singh</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Photo Permission</string>
+	<key>NSFileProviderPresenceUsageDescription</key>
+	<string>File Provider</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Media Library</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Photo Library Additional</string>
 </dict>
 </plist>
