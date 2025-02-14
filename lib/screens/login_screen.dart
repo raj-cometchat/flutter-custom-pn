@@ -24,7 +24,6 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver, 
       ..appId = AppConstants.appId
       ..authKey = AppConstants.authKey
       ..extensions = CometChatUIKitChatExtensions.getDefaultExtensions()
-      ..callingExtension = CometChatCallingExtension()
     )
         .build();
 

@@ -3,6 +3,7 @@ import CallKit
 import flutter_callkit_incoming
 import UIKit
 import PushKit
+//import AVFoundation
 
 func createUUID(sessionid: String) -> String {
     let components = sessionid.components(separatedBy: ".")
@@ -32,6 +33,7 @@ func convertDictionaryToJsonString(dictionary: [String: Any]) -> String? {
 @main
 @objc class AppDelegate: FlutterAppDelegate, PKPushRegistryDelegate {
     
+    var callKitProvider: CXProvider?
     var pushRegistry: PKPushRegistry!
     var callController: CXCallController?
     override func application(
@@ -43,26 +45,26 @@ func convertDictionaryToJsonString(dictionary: [String: Any]) -> String? {
         
         let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
         let appInfoChannel = FlutterMethodChannel(name: "com.cometchat.flutter_pn",
-            binaryMessenger: controller.binaryMessenger)
+                                                  binaryMessenger: controller.binaryMessenger)
         
         appInfoChannel.setMethodCallHandler({
-              (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
-              if call.method == "getAppInfo" {
+            (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
+            if call.method == "getAppInfo" {
                 var appInfo: [String: String] = [:]
                 appInfo["bundleId"] = Bundle.main.bundleIdentifier
                 appInfo["version"] = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
                 result(appInfo)
-              } else if call.method == "endCall" {
-                  if let activeCall = self.activeCallSession {
-                      SwiftFlutterCallkitIncomingPlugin.sharedInstance?.endCall(activeCall)
-
-                      result(true)
-                  }else {
-                  result(false)}
-                } else {
+            } else if call.method == "endCall" {
+                if let activeCall = self.activeCallSession {
+                    SwiftFlutterCallkitIncomingPlugin.sharedInstance?.endCall(activeCall)
+                    
+                    result(true)
+                }else {
+                    result(false)}
+            } else {
                 result(FlutterMethodNotImplemented)
-              }
-            })
+            }
+        })
         
         // Set up the PushKit registry
         pushRegistry = PKPushRegistry(queue: DispatchQueue.main)
@@ -70,11 +72,11 @@ func convertDictionaryToJsonString(dictionary: [String: Any]) -> String? {
         pushRegistry.desiredPushTypes = Set([.voIP])  // Specify VoIP push type
         
         let providerConfiguration = CXProviderConfiguration(localizedName: "Your App")
-                providerConfiguration.supportsVideo = false
-                providerConfiguration.supportedHandleTypes = [.phoneNumber]
+        providerConfiguration.supportsVideo = false
+        providerConfiguration.supportedHandleTypes = [.phoneNumber]
         
         let callKitProvider = CXProvider(configuration: providerConfiguration)
-                callController = CXCallController()
+        callController = CXCallController()
         if #available(iOS 18.0, *) {
             UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
         }
@@ -159,6 +161,7 @@ func convertDictionaryToJsonString(dictionary: [String: Any]) -> String? {
                     data.duration = 55000 // has to be greater than the CometChat duration
                     
                     activeCallSession = data
+                    
                     SwiftFlutterCallkitIncomingPlugin.sharedInstance?.showCallkitIncoming(data, fromPushKit: true)
                     break
                 case "unanswered", "cancelled", "rejected":
@@ -174,9 +177,43 @@ func convertDictionaryToJsonString(dictionary: [String: Any]) -> String? {
             
             completion()
         }
+        let uuid = UUID()
+        let handle = "12345" // Replace with the actual caller's phone number or ID
+        
+        let update = CXCallUpdate()
+        update.remoteHandle = CXHandle(type: .phoneNumber, value: handle)
+        update.hasVideo = false
+        
+        let startCallAction = CXStartCallAction(call: uuid, handle: update.remoteHandle!)
+        let transaction = CXTransaction(action: startCallAction)
+        
+        // Report the incoming call to CallKit
+        callKitProvider?.reportNewIncomingCall(with: uuid, update: update) { error in
+            if let error = error {
+                print("Error reporting incoming call: \(error.localizedDescription)")
+            } else {
+                // Start the call once it's reported
+//                self.configureAudioSession()
+                self.callController?.request(transaction, completion: { error in
+                    if let error = error {
+                        print("Failed to start call: \(error.localizedDescription)")
+                    }
+                })
+            }
+        }
     }
+//    func configureAudioSession() {
+//        let audioSession = AVAudioSession.sharedInstance()
+//        do {
+//            try audioSession.setCategory(.playAndRecord, options: [.allowBluetooth, .defaultToSpeaker])
+//            try audioSession.setMode(.voiceChat)
+//            try audioSession.setActive(true)
+//        } catch {
+//            print("Failed to activate audio session: \(error.localizedDescription)")
+//        }
+//    }
 }
-
+//---------------------------------------------------------------------------------------
 
 //import Flutter
 //import flutter_callkit_incoming

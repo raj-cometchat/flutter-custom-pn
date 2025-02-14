@@ -150,7 +150,9 @@ class APNSService with CometChatCallsEventsListener {
             SharedPreferencesClass.setString("SessionId", sessionId);
             SharedPreferencesClass.setString("Guid", guid);
             SharedPreferencesClass.setString("callType", callEvent?.body["type"] == 0 ? "audio" : "video");
+
             OpenWebView(context,guid,sessionId);
+
             /*UIKitSettings uiKitSettings = (UIKitSettingsBuilder()
                   ..subscriptionType = CometChatSubscriptionType.allUsers
                   ..region = AppConstants.region
@@ -207,37 +209,37 @@ class APNSService with CometChatCallsEventsListener {
 
           case Event.actionCallDecline:
             debugPrint("onactionCallDecline Clicked");
-            CometChatUIKitCalls.rejectCall(
-                sessionId, CallStatusConstants.rejected,
-                onSuccess: (Call call) async {
-              call.category = MessageCategoryConstants.call;
-              CometChatCallEvents.ccCallRejected(call);
+            // CometChatUIKitCalls.rejectCall(
+            //     sessionId, CallStatusConstants.rejected,
+            //     onSuccess: (Call call) async {
+            //   call.category = MessageCategoryConstants.call;
+            //   CometChatCallEvents.ccCallRejected(call);
               await FlutterCallkitIncoming.endCall(sessionId);
-            }, onError: (e) {
-              debugPrint(
-                  "Unable to end call from incoming call screen ${e.message}");
-            });
+            // }, onError: (e) {
+            //   debugPrint(
+            //       "Unable to end call from incoming call screen ${e.message}");
+            // });
             break;
           case Event.actionCallEnded:
             debugPrint("onactionCallEnded Clicked");
-            CometChat.endCall(
-              sessionId,
-              onSuccess: (call) {
-                CometChat.clearActiveCall();
-                CometChatCalls.endSession(
-                  onSuccess: (onSuccess) {
-                    CometChatCallEvents.ccCallEnded(call);
-                    debugPrint("END CALl");
-                  },
-                  onError: (excep) {
-                    debugPrint("CALl NOT ENDED $excep");
-                  },
-                );
-              },
-              onError: (excep) {
-                debugPrint("$excep");
-              },
-            );
+            // CometChat.endCall(
+            //   sessionId,
+            //   onSuccess: (call) {
+            //     CometChat.clearActiveCall();
+            //     CometChatCalls.endSession(
+            //       onSuccess: (onSuccess) {
+            //         CometChatCallEvents.ccCallEnded(call);
+            //         debugPrint("END CALl");
+            //       },
+            //       onError: (excep) {
+            //         debugPrint("CALl NOT ENDED $excep");
+            //       },
+            //     );
+            //   },
+            //   onError: (excep) {
+            //     debugPrint("$excep");
+            //   },
+            // );
             /*CometChatUIKitCalls.endSession(
               onSuccess: (message) {
                 CometChat.clearActiveCall();
@@ -248,7 +250,6 @@ class APNSService with CometChatCallsEventsListener {
                       'caught in endSession call could not be ended: ${error.message}');
               },
             );*/
-
             break;
           default:
             break;
@@ -271,56 +272,58 @@ class APNSService with CometChatCallsEventsListener {
       PayloadData payloadData = PayloadData.fromJson(message.data);
       if (payloadData.type == "call") {
         displayIncomingCall(message);
-      } else {
-        final receiverType = payloadData.receiverType ?? "";
-        User? sendUser;
-        Group? sendGroup;
-
-        String messageCategory = payloadData.type ?? "";
-
-        if (receiverType == CometChatReceiverType.user) {
-          final uid = payloadData.sender ?? "";
-          await CometChat.getUser(
-            uid,
-            onSuccess: (user) {
-              debugPrint("Got User App Background $user");
-              sendUser = user;
-            },
-            onError: (excep) {
-              debugPrint(excep.message);
-            },
-          );
-        } else if (receiverType == CometChatReceiverType.group) {
-          final guid = payloadData.receiver ?? "";
-          await CometChat.getGroup(
-            guid,
-            onSuccess: (group) {
-              sendGroup = group;
-            },
-            onError: (excep) {
-              debugPrint(excep.message);
-            },
-          );
-        }
-
-        if (messageCategory == "chat" &&
-                (receiverType == CometChatReceiverType.user &&
-                    sendUser != null) ||
-            (receiverType == CometChatReceiverType.group &&
-                sendGroup != null)) {
-          if (context.mounted) {
-            Future.delayed(const Duration(seconds: 2), () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => CometChatMessages(
-                    user: sendUser,
-                    group: sendGroup,
-                  ),
-                ),
-              );
-            });
-          }
-        }
+        // }
+        // else {
+        //   final receiverType = payloadData.receiverType ?? "";
+        //   User? sendUser;
+        //   Group? sendGroup;
+        //
+        //   String messageCategory = payloadData.type ?? "";
+        //
+        //   if (receiverType == CometChatReceiverType.user) {
+        //     final uid = payloadData.sender ?? "";
+        //     await CometChat.getUser(
+        //       uid,
+        //       onSuccess: (user) {
+        //         debugPrint("Got User App Background $user");
+        //         sendUser = user;
+        //       },
+        //       onError: (excep) {
+        //         debugPrint(excep.message);
+        //       },
+        //     );
+        //   } else if (receiverType == CometChatReceiverType.group) {
+        //     final guid = payloadData.receiver ?? "";
+        //     await CometChat.getGroup(
+        //       guid,
+        //       onSuccess: (group) {
+        //         sendGroup = group;
+        //       },
+        //       onError: (excep) {
+        //         debugPrint(excep.message);
+        //       },
+        //     );
+        //   }
+        //
+        //   if (messageCategory == "chat" &&
+        //           (receiverType == CometChatReceiverType.user &&
+        //               sendUser != null) ||
+        //       (receiverType == CometChatReceiverType.group &&
+        //           sendGroup != null)) {
+        //     if (context.mounted) {
+        //       Future.delayed(const Duration(seconds: 2), () {
+        //         Navigator.of(context).push(
+        //           MaterialPageRoute(
+        //             builder: (context) => CometChatMessages(
+        //               user: sendUser,
+        //               group: sendGroup,
+        //             ),
+        //           ),
+        //         );
+        //       });
+        //     }
+        //   }
+        // }
       }
     }
   }
@@ -329,7 +332,7 @@ class APNSService with CometChatCallsEventsListener {
 void OpenWebView(BuildContext context, String guid, sessionID) {
   // String authToken = CometChat.getUserAuthToken().toString();
   print("PROCESS 2 ------------------------------> 410");
-  String authToken = "superhero4_173340169895f3eafd536ca6da3864fbd9f26ef2";
+  String authToken = "raj_1738244291d5dbe3343ca14928b7177044d7abf1";
   print("AUTH TOKEN - $authToken");
   Navigator.push(
     context,

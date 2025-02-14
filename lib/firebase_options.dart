@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBoEZjNDxXYH5HJdk2150-SakFINlxp4Ac',
-    appId: '1:182368211645:android:b432654aada3bc3f149dd4',
-    messagingSenderId: '182368211645',
-    projectId: 'flutter-custom-pn',
-    storageBucket: 'flutter-custom-pn.appspot.com',
+    apiKey: 'AIzaSyCMsKeQF-fJ81rHOWNcSoM-CHcpcgAOxGE',
+    appId: '1:451511823598:android:49f7bc456f4066f16dd7ff',
+    messagingSenderId: '451511823598',
+    projectId: 'enhanced-push-notification',
+    storageBucket: 'enhanced-push-notification.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBn3QiCxGkwMh2qZqyIAjVpnHw5G8NOX7E',
-    appId: '1:182368211645:ios:7e3f33cbc1890f9e149dd4',
-    messagingSenderId: '182368211645',
-    projectId: 'flutter-custom-pn',
-    storageBucket: 'flutter-custom-pn.appspot.com',
+    apiKey: 'AIzaSyBC2zoeDo6QoEuoZp85Buakh0NuN8yc6xk',
+    appId: '1:451511823598:ios:332270082b3a11c86dd7ff',
+    messagingSenderId: '451511823598',
+    projectId: 'enhanced-push-notification',
+    storageBucket: 'enhanced-push-notification.firebasestorage.app',
     iosBundleId: 'com.inscripts.cometchat.testing',
   );
 

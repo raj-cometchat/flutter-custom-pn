@@ -1,21 +1,40 @@
 {
   "project_info": {
-    "project_number": "182368211645",
-    "project_id": "flutter-custom-pn",
-    "storage_bucket": "flutter-custom-pn.appspot.com"
+    "project_number": "451511823598",
+    "project_id": "enhanced-push-notification",
+    "storage_bucket": "enhanced-push-notification.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:182368211645:android:b432654aada3bc3f149dd4",
+        "mobilesdk_app_id": "1:451511823598:android:49f7bc456f4066f16dd7ff",
         "android_client_info": {
-          "package_name": "com.example.flutter_custom_pn"
+          "package_name": "com.inscripts.cometchat.flutter_custom_pn"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBoEZjNDxXYH5HJdk2150-SakFINlxp4Ac"
+          "current_key": "AIzaSyCMsKeQF-fJ81rHOWNcSoM-CHcpcgAOxGE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451511823598:android:3a46ec18258067056dd7ff",
+        "android_client_info": {
+          "package_name": "com.react_native_sample_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMsKeQF-fJ81rHOWNcSoM-CHcpcgAOxGE"
         }
       ],
       "services": {

@@ -193,7 +193,7 @@ class FirebaseService {
           providerId: AppConstants.fcmProviderId,
           fcmToken: token,
           onSuccess: (response) {
-            debugPrint("registerPushToken:success ${response.toString()}");
+            debugPrint("registerPushToken:success ${response.toString()} $token");
           },
           onError: (e) {
             debugPrint("registerPushToken:error ${e.toString()}");
@@ -372,23 +372,23 @@ class FirebaseService {
       }
 
       // Navigating to the chat screen when messageCategory is message
-      if (messageCategory == "chat" &&
-              (receiverType == ReceiverTypeConstants.user &&
-                  sendUser != null) ||
-          (receiverType == ReceiverTypeConstants.group && sendGroup != null)) {
-        if (context.mounted) {
-          Future.delayed(const Duration(seconds: 2), () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => CometChatMessages(
-                  user: sendUser,
-                  group: sendGroup,
-                ),
-              ),
-            );
-          });
-        }
-      }
+      // if (messageCategory == "chat" &&
+      //         (receiverType == ReceiverTypeConstants.user &&
+      //             sendUser != null) ||
+      //     (receiverType == ReceiverTypeConstants.group && sendGroup != null)) {
+      //   if (context.mounted) {
+      //     Future.delayed(const Duration(seconds: 2), () {
+      //       Navigator.of(context).push(
+      //         MaterialPageRoute(
+      //           builder: (context) => CometChatMessages(
+      //             user: sendUser,
+      //             group: sendGroup,
+      //           ),
+      //         ),
+      //       );
+      //     });
+      //   }
+      // }
     }
   }
 

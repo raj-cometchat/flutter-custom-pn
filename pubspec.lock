@@ -500,6 +500,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.19.0"
+  is_lock_screen2:
+    dependency: "direct main"
+    description:
+      name: is_lock_screen2
+      sha256: "1e863afcddc2055a786ed7004492a24b88f98378c9c47e20ed5506cf447d4cb1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   json_annotation:
     dependency: transitive
     description:
