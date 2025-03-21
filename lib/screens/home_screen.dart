@@ -64,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen>
               javaScriptEnabled: true, // Enable JavaScript
             ),
             onWebViewCreated: (InAppWebViewController controller) {
+
               // Initialize the webViewController when the WebView is created
               webViewController = controller;
             },

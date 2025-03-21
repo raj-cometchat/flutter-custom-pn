@@ -46,7 +46,7 @@ Future<void> displayIncomingCall(RemoteMessage rMessage) async {
         id: callUUID,
         nameCaller: callerName,
         appName: 'notification_new',
-        type: (callType == CallType.audio) ? 0 : 1,
+        type: 0,
         textAccept: 'Accept',
         textDecline: 'Decline',
         duration: 40000,

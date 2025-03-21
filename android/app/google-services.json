@@ -7,6 +7,63 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:451511823598:android:bffad13af17cc2cb6dd7ff",
+        "android_client_info": {
+          "package_name": "com.cometchat.flutter_pn"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMsKeQF-fJ81rHOWNcSoM-CHcpcgAOxGE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451511823598:android:d52fc2ca9cdf77b36dd7ff",
+        "android_client_info": {
+          "package_name": "com.cometchat.pushnotificationsample"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMsKeQF-fJ81rHOWNcSoM-CHcpcgAOxGE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451511823598:android:460b5ccd994b18ed6dd7ff",
+        "android_client_info": {
+          "package_name": "com.example.newpn"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMsKeQF-fJ81rHOWNcSoM-CHcpcgAOxGE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:451511823598:android:49f7bc456f4066f16dd7ff",
         "android_client_info": {
           "package_name": "com.inscripts.cometchat.flutter_custom_pn"

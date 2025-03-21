@@ -1,9 +1,7 @@
 import 'package:cometchat_calls_uikit/cometchat_calls_uikit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_pn/screens/login_screen.dart';
-import 'package:flutter_custom_pn/sufin.dart';
 import 'package:get/get.dart';
-import 'package:is_lock_screen2/is_lock_screen2.dart';
 
 import 'shared_perferences.dart';
 

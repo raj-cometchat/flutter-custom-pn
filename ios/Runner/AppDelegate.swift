@@ -36,10 +36,7 @@ func convertDictionaryToJsonString(dictionary: [String: Any]) -> String? {
     var callKitProvider: CXProvider?
     var pushRegistry: PKPushRegistry!
     var callController: CXCallController?
-    override func application(
-        _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-    ) -> Bool {
+    override func application(_ application: UIApplication,didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Register the Flutter plugin
         GeneratedPluginRegistrant.register(with: self)
         

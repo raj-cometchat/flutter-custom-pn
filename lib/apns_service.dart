@@ -1,6 +1,6 @@
 import 'dart:convert';
+
 import 'package:cometchat_calls_uikit/cometchat_calls_uikit.dart';
-import 'package:cometchat_chat_uikit/cometchat_chat_uikit.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_apns_x/flutter_apns/src/apns_connector.dart';
@@ -8,6 +8,7 @@ import 'package:flutter_callkit_incoming/entities/entities.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:flutter_custom_pn/const.dart';
 import 'package:permission_handler/permission_handler.dart';
+
 import 'models/call_action.dart';
 import 'models/call_type.dart';
 import 'models/payload_data.dart';
@@ -44,7 +45,7 @@ class APNSService with CometChatCallsEventsListener {
           id: callUUID,
           nameCaller: callerName,
           appName: 'notification_new',
-          type: (callType == CallType.audio) ? 0 : 1,
+          // type: 1,
           textAccept: 'Accept',
           textDecline: 'Decline',
           duration: 55000,
@@ -126,6 +127,7 @@ class APNSService with CometChatCallsEventsListener {
       },
     );
 
+
     // Call event listeners
 
     FlutterCallkitIncoming.onEvent.listen(
@@ -143,16 +145,14 @@ class APNSService with CometChatCallsEventsListener {
 
         switch (callEvent?.event) {
           case Event.actionCallIncoming:
- 
             SharedPreferencesClass.init();
             break;
           case Event.actionCallAccept:
             SharedPreferencesClass.setString("SessionId", sessionId);
             SharedPreferencesClass.setString("Guid", guid);
-            SharedPreferencesClass.setString("callType", callEvent?.body["type"] == 0 ? "audio" : "video");
-
-            OpenWebView(context,guid,sessionId);
-
+            SharedPreferencesClass.setString(
+                "callType", callEvent?.body["type"] == 0 ? "audio" : "video");
+            OpenWebView(context, guid, sessionId);
             /*UIKitSettings uiKitSettings = (UIKitSettingsBuilder()
                   ..subscriptionType = CometChatSubscriptionType.allUsers
                   ..region = AppConstants.region
@@ -214,7 +214,7 @@ class APNSService with CometChatCallsEventsListener {
             //     onSuccess: (Call call) async {
             //   call.category = MessageCategoryConstants.call;
             //   CometChatCallEvents.ccCallRejected(call);
-              await FlutterCallkitIncoming.endCall(sessionId);
+            await FlutterCallkitIncoming.endCall(sessionId);
             // }, onError: (e) {
             //   debugPrint(
             //       "Unable to end call from incoming call screen ${e.message}");
@@ -267,7 +267,8 @@ class APNSService with CometChatCallsEventsListener {
 
   // This method processes the incoming Remote message to handle user or group notifications and carries out appropriate actions such as initiating a chat or call.
 
-  Future<void> openNotification(RemoteMessage? message, BuildContext context) async {
+  Future<void> openNotification(
+      RemoteMessage? message, BuildContext context) async {
     if (message != null) {
       PayloadData payloadData = PayloadData.fromJson(message.data);
       if (payloadData.type == "call") {
