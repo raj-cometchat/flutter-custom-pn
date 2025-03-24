@@ -2,6 +2,7 @@ import 'package:cometchat_calls_uikit/cometchat_calls_uikit.dart';
 import 'package:cometchat_chat_uikit/cometchat_chat_uikit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_pn/const.dart';
+
 import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -11,20 +12,19 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver, CallListener{
+class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver, CallListener {
+  final TextEditingController _userIdController = TextEditingController();
 
   @override
   void initState() {
-
     super.initState();
     UIKitSettings uiKitSettings = (UIKitSettingsBuilder()
-      ..subscriptionType = CometChatSubscriptionType.allUsers
-      ..region = AppConstants.region
-      ..autoEstablishSocketConnection = true
-      ..appId = AppConstants.appId
-      ..authKey = AppConstants.authKey
-      ..extensions = CometChatUIKitChatExtensions.getDefaultExtensions()
-    )
+          ..subscriptionType = CometChatSubscriptionType.allUsers
+          ..region = AppConstants.region
+          ..autoEstablishSocketConnection = true
+          ..appId = AppConstants.appId
+          ..authKey = AppConstants.authKey
+          ..extensions = CometChatUIKitChatExtensions.getDefaultExtensions())
         .build();
 
     CometChatUIKit.init(
@@ -44,19 +44,19 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver, 
 
     debugPrint("CallingExtension enable with context called in login");
     CometChat.addCallListener("CometChatService_CallListener", this);
-
   }
 
   void loginUser() {
     setState(() {
-      CometChatUIKit.login(AppConstants.loginuser,
+      String userId = _userIdController.text.trim();
+      CometChatUIKit.login(userId,
           onSuccess: (User user) async {
-            debugPrint("Login Successful : $user");
-            print("PROCESS -------------------------- 8> Login Successful");
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => HomeScreen(),
-            ));
-            /*return CometChatNotifications.registerPushToken(
+        debugPrint("Login Successful : $user");
+        print("PROCESS -------------------------- 8> Login Successful");
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => HomeScreen(),
+        ));
+        /*return CometChatNotifications.registerPushToken(
               PushPlatforms.FCM_FLUTTER_ANDROID,
               providerId: AppConstants.fcmProviderId,
               fcmToken: token,
@@ -71,35 +71,38 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver, 
                     "PROCESS -------------------------- 11> Firebase Token NOT Registered");
               },
             );*/
-          }, onError: (CometChatException e) {
-            debugPrint("Login failed with exception:  ${e.message}");
-            print("PROCESS -------------------------- 12> Login NOT Successful");
-          });
+      }, onError: (CometChatException e) {
+        debugPrint("Login failed with exception:  ${e.message}");
+        print("PROCESS -------------------------- 12> Login NOT Successful");
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("CUSTOM FLUTTER PN APP"),
-      ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-          ],
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: const Text("CUSTOM FLUTTER PN APP"),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: loginUser,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-    );
+        body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                TextField(
+                  controller: _userIdController,
+                  decoration: InputDecoration(
+                    labelText: "Enter User ID",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: loginUser,
+                  child: const Text("Login"),
+                ),
+              ],
+            )));
   }
 }

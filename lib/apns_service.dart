@@ -333,7 +333,7 @@ class APNSService with CometChatCallsEventsListener {
 void OpenWebView(BuildContext context, String guid, sessionID) {
   // String authToken = CometChat.getUserAuthToken().toString();
   print("PROCESS 2 ------------------------------> 410");
-  String authToken = "raj_1738244291d5dbe3343ca14928b7177044d7abf1";
+  String authToken = CometChat.getUserAuthToken().toString();
   print("AUTH TOKEN - $authToken");
   Navigator.push(
     context,
